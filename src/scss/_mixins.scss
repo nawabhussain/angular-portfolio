@@ -1,0 +1,63 @@
+@mixin flex-container($flexdirection,$justifycontent:false){
+
+    @if $justifycontent { justify-content: $justifycontent;}
+    @else {
+        justify-content: center;
+    }
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: $flexdirection;
+}
+
+@mixin grid-template {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 300px;
+}
+
+@mixin animation-delay($element){
+    @for $i from 1 through $element {
+        &:nth-child(#{$i}) {
+            animation: slideIn (#{$i*0.2s}) forwards;
+        }
+    }
+}
+
+@mixin grid-template($line,$column){
+    display: grid;
+    grid-template-columns: repeat($line,$column);
+    grid-template-row:300px
+}
+
+//Media query to use breakpoints
+@mixin mq($breakpoint, $type: min) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        $breakpoint-value: map_get($breakpoints, $breakpoint);
+        @if $type == max {
+            $breakpoint-value: $breakpoint-value - 1px;
+        }
+        @media (#{$type}-width: $breakpoint-value) {
+            @content;
+        }
+    }
+}
+
+//Media query to use the screen with minimum and maximum size
+@mixin mq-between($lower,$upper) {
+    @if map-has-key($breakpoints,$lower) and map-has-key($breakpoints, $upper) {
+        $lower-breakpoint:map-get($breakpoints, $lower);
+        $upper-breakpoint:map-get($breakpoints, $upper);
+
+        @media (min-width:$lower-breakpoint) and (max-width:($upper-breakpoint - 1)) {
+            @content;
+        }
+    } else {
+       @if (map-has-key($breakpoints, $lower ) == false) {
+        @warn 'Your breakpoint was invalid: #{$lower}.';
+       }
+       @if (map-has-key($breakpoints, $upper ) == false) {
+        @warn 'Your breakpoint was invalid: #{$upper}.';
+       }
+    }
+}

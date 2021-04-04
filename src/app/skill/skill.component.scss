@@ -1,0 +1,45 @@
+@import "mixins";
+@import "variables";
+
+.skill {
+  //@include flex-container(column);
+  padding-top: 4rem;
+  background: linear-gradient(to bottom, #000000 0%, #1c1c1c 30%);
+  color: white;
+
+
+  &__heading {
+    align-self: center;
+    text-align: center;
+    color: $white;
+  }
+
+  &_title {
+    font-size: $font-size-h2;
+    text-transform: uppercase;
+    color: white;
+    font-family: Nunito Sans, sans-serif;
+  }
+
+  &__paragraph {
+    margin-bottom: 10px;
+    color: white;
+    font-size: $paragraph;
+  }
+}
+
+.skill-card{
+  padding: 20px;
+  margin-top: 10px;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-center {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,48 @@
+<!--<app-header></app-header>-->
+<mat-sidenav-container class="dark-container">
+  <mat-sidenav class="dark-container w-100 p-4" #sidenav mode="over" position="start" [fixedInViewport]="true">
+    <div>
+      <button style="color: white;">
+        <mat-icon aria-hidden="false" aria-label="Menu" (click)="toggleSideNav(sidenav)" style="font-size: xxx-large;">
+          close
+        </mat-icon>
+      </button>
+
+      <div class="container w-75 h-75">
+        <mat-grid-list [cols]="breakpoint" rowHeight="5:2" (window:resize)="onResize($event)" gutterSize="10px">
+          <mat-grid-tile class="nav__item nav-item-var1">
+            <a (click)="scroll('about', sidenav)">About</a>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="nav__item nav-item-var2">
+            <a (click)="scroll('skill', sidenav)" #skill>Skill</a>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="nav__item nav-item-var2">
+            <a (click)="scroll('portfolio', sidenav)" #portfolio>Portfolio</a>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="nav__item nav-item-var1">
+            <a (click)="scroll('contato', sidenav)" #contato>Contato</a>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div>
+      <button class="m-4 menu-button">
+        <mat-icon aria-hidden="false" aria-label="Menu" (click)="toggleSideNav(sidenav)" style="font-size: xxx-large;">
+          clear_all
+        </mat-icon>
+      </button>
+    </div>
+    <app-about></app-about>
+    <app-skill></app-skill>
+<!--    <portfolio></portfolio>-->
+<!--    <contact></contact>-->
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

@@ -1,0 +1,10 @@
+.dark-container{
+  background-color: transparent;
+  color: white;
+}
+
+.mat-content-center{
+  background-color: transparent;
+  margin: auto 0 0;
+  display: flex;
+}
