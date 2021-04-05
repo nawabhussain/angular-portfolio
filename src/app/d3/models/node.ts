@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 export class Node implements d3.SimulationNodeDatum {
   // optional - defining optional implementation properties - required for relevant typing assistance
-  index?: number;
+  index: number;
   x?: number;
   y?: number;
   vx?: number;
@@ -11,7 +11,7 @@ export class Node implements d3.SimulationNodeDatum {
   fx?: number | null;
   fy?: number | null;
   parent?: number;
-
+  stringIndex? :string;
   id: string;
   linkCount = 0;
 
@@ -23,6 +23,7 @@ export class Node implements d3.SimulationNodeDatum {
     this.index = index;
     this.parent = parent;
     this.linkCount = linkCount;
+    this.stringIndex = this.id.replace(" ", "_");
   }
 
   normal = () => {
@@ -39,7 +40,7 @@ export class Node implements d3.SimulationNodeDatum {
 
   get color() {
     if (this.index < 5) {
-      const index = this.index + 1;
+      const index = this.index;
       return APP_CONFIG.SPECTRUM[index];
     } else {
       const index = this.parent;

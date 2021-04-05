@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import {ForceDirectedGraph} from '../../models';
 import {D3Service} from '../../d3.service';
+import * as d3 from 'd3';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-graph',
@@ -21,7 +23,7 @@ import {D3Service} from '../../d3.service';
         <g [zoomableOf]="svg">
           <g [linkVisual]="link" *ngFor="let link of links"></g>
           <g [nodeVisual]="node" *ngFor="let node of nodes"
-             [draggableNode]="node" [draggableInGraph]="graph"></g>
+             [draggableNode]="node" [draggableInGraph]="graph" (click)="toggleNode(node)"></g>
         </g>
       </svg>
     </mat-card>
@@ -31,6 +33,7 @@ import {D3Service} from '../../d3.service';
 export class GraphComponent implements OnInit, AfterViewInit {
   @Input('nodes') nodes;
   @Input('links') links;
+  @Input('groups') groups;
 
   graph: ForceDirectedGraph;
   // tslint:disable-next-line:variable-name
@@ -61,6 +64,30 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.graph.initSimulation(this.options);
+  }
+
+  // Toggle children on click.
+  toggleNode(node) {
+    if(node.index!=0){
+      const n = this.groups[node.index];
+      if(n){
+        const active   = n.active ? false : true; // toggle whether node is active
+        const newOpacity = active ? 0 : 1;
+
+        // Extract node's name and the names of its neighbors
+        // const index     = n.index;
+        const neighbors  = n.neighbourhood;
+
+        // Hide the neighbors and their links
+        for (var i = 0; i < neighbors.length; i++){
+              d3.select("circle#" + neighbors[i].stringIndex).style("opacity", newOpacity);
+              d3.select("text#" + neighbors[i].stringIndex).style("opacity", newOpacity);
+              d3.selectAll("line#" + neighbors[i].stringIndex).style("opacity", newOpacity);
+        }
+        // Update whether or not the node is active
+        n.active = active;
+      }
+    }
   }
 
   get options() {

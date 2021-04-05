@@ -5,9 +5,10 @@ import {Node} from '../../../models';
   // tslint:disable-next-line:component-selector
   selector: '[nodeVisual]',
   template: `
-    <svg:g [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+    <svg:g  [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
       <svg:circle
         class="node"
+        [id]="node.stringIndex"
         [attr.fill]="node.color"
         cx="0"
         cy="0"
@@ -15,6 +16,7 @@ import {Node} from '../../../models';
       </svg:circle>
       <svg:text
         class="node-name"
+        [id]="node.stringIndex"
         [attr.font-size]="node.fontSize">
         {{node.id}}
       </svg:text>

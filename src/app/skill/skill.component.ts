@@ -16,7 +16,7 @@ import {skills} from '../../assets/json/skills';
 })
 export class SkillComponent extends ScrollAnimationComponent implements OnInit {
   public breakpoint: number;
-
+  neighbours = {};
   nodes: Node[] = [];
   links: Link[] = [];
 
@@ -29,7 +29,6 @@ export class SkillComponent extends ScrollAnimationComponent implements OnInit {
 
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 768) ? 1 : 2;
-
     this.getSkills();
   }
 
@@ -53,8 +52,12 @@ export class SkillComponent extends ScrollAnimationComponent implements OnInit {
       node.setData(element.index, element.parent, element.linkCount);
       this.nodes.push(node);
     });
-
     const groups = groupByParent(this.nodes);
+    for (let key in groups) {
+      let neighbourhood = groups[key];
+      this.neighbours[key] = {"active": true, "neighbourhood": neighbourhood};
+    }
+    console.log(this.neighbours);
     const rootKeys = Object.keys(groups);
     this.nodes.forEach(e => {
       if (rootKeys.indexOf(String(e.index)) > -1) {
